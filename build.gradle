@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = 'se.anders_raberg.adventofcode2018.DaysMain'
+
+applicationDistribution.from("$projectDir/inputs") {
+    into "inputs"
+}

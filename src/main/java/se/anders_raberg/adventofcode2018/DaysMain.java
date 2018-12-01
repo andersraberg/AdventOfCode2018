@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public class DaysMain {
     public static void main(String[] args) throws IOException {
-        Day1a.run();
+        Day1.run();
     }
 }

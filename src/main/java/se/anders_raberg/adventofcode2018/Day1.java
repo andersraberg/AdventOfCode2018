@@ -31,7 +31,6 @@ public class Day1 {
                 currenFreq = currenFreq + change;
                 boolean alreadyReached = !frequenciesReached.add(currenFreq);
                 if (alreadyReached) {
-                    System.out.println(currenFreq);
                     firstReachedTwice = Optional.of(currenFreq);
                     break;
                 }

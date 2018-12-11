@@ -1,8 +1,10 @@
 package se.anders_raberg.adventofcode2018;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 import se.anders_raberg.adventofcode2018.utilities.Pair;
 
@@ -24,16 +26,13 @@ public class Day11 {
         Pair<Integer, Pair<Integer, Integer>> maxPart1 = calcMaxPowerForSquare(3, grid);
 
         // Part 2
-        Map<Integer, Pair<Integer, Pair<Integer, Integer>>> powerPerSquareSize = new HashMap<>();
-        for (int i = 1; i < GRID_SIZE; i++) {
-            Pair<Integer, Pair<Integer, Integer>> maxPowerForSquare = calcMaxPowerForSquare(i, grid);
-            powerPerSquareSize.put(maxPowerForSquare.first(), new Pair<>(i, maxPowerForSquare.second()));
-        }
+        Pair<Integer, Pair<Integer, Pair<Integer, Integer>>> maxPart2 = IntStream.range(1, GRID_SIZE) //
+                .parallel() //
+                .mapToObj(i -> new Pair<>(i, calcMaxPowerForSquare(i, grid))) //
+                .max(Comparator.comparingInt(a -> a.second().first())).get();
 
-        int maxPower = powerPerSquareSize.keySet().stream().mapToInt(Integer::intValue).max().getAsInt();
-        Pair<Integer, Pair<Integer, Integer>> maxPart2 = powerPerSquareSize.get(maxPower);
         LOGGER.info("Part 1 : Power: " + maxPart1.first() + " for " + maxPart1.second());
-        LOGGER.info("Part 2 : Power: " + maxPower + " for " + maxPart2.second() + " with size " + maxPart2.first());
+        LOGGER.info("Part 2 : Max power for " + maxPart2.second() + " with size " + maxPart2.first());
     }
 
     private static Pair<Integer, Pair<Integer, Integer>> calcMaxPowerForSquare(int squareSize, int[][] grid) {

@@ -122,7 +122,7 @@ public class Day16 {
         opcodes.put("gtrr", (r, a, b, c) -> {List<Integer> w = new ArrayList<>(r); w.set(c, r.get(a) > r.get(b) ? 1 : 0); return w;});
         opcodes.put("eqir", (r, a, b, c) -> {List<Integer> w = new ArrayList<>(r); w.set(c, a == r.get(b) ? 1 : 0); return w;});
         opcodes.put("eqri", (r, a, b, c) -> {List<Integer> w = new ArrayList<>(r); w.set(c, r.get(a) == b ? 1 : 0); return w;});
-        opcodes.put("eqrr", (r, a, b, c) -> {List<Integer> w = new ArrayList<>(r); w.set(c, r.get(a) == r.get(b) ? 1 : 0); return w;});
+        opcodes.put("eqrr", (r, a, b, c) -> {List<Integer> w = new ArrayList<>(r); w.set(c, r.get(a).equals(r.get(b)) ? 1 : 0); return w;});
         return opcodes;
     }
 

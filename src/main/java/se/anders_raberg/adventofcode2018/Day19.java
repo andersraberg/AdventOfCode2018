@@ -70,7 +70,7 @@ public class Day19 {
                 .map(Operation::parseOperation) //
                 .collect(Collectors.toList());
 
-        List<Integer> registers = Arrays.asList(1, 0, 0, 0, 0, 0);
+        List<Integer> registers = Arrays.asList(0, 0, 0, 0, 0, 0);
         final int ipRegister = 1;
         int ip = 0;
 

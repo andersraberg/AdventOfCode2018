@@ -1,6 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'eclipse'
+plugins {
+    id "java"
+    id "application"
+    id "eclipse"
+    id "org.sonarqube" version "2.7"
+}
 
 repositories {
     jcenter()

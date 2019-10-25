@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +18,7 @@ import se.anders_raberg.adventofcode2018.utilities.Pair;
 
 public class Day16 {
     private static final Logger LOGGER = Logger.getLogger(Day16.class.getName());
-    private final static Pattern PATTERN = Pattern.compile("Before: \\[(.+)\\]\\n+(.+)\\nAfter:  \\[(.+)\\]");
+    private static final  Pattern PATTERN = Pattern.compile("Before: \\[(.+)\\]\\n+(.+)\\nAfter:  \\[(.+)\\]");
 
     @FunctionalInterface
     private interface Opcode {
@@ -56,7 +57,7 @@ public class Day16 {
         long numberOfSamples = opSamples.stream()
                 .map(o -> opcodes.entrySet().stream()
                         .filter(e -> e.getValue().apply(o._before, o._a, o._b, o._c).equals(o._after))
-                        .map(e -> e.getKey()).count())
+                        .map(Entry::getKey).count())
                 .filter(c -> c >= 3).count();
 
         LOGGER.info("Part 1: Number of samples: " + numberOfSamples);
@@ -92,7 +93,7 @@ public class Day16 {
                 .map(o -> new Pair<>(o._no,
                         opcodes.entrySet().stream()
                                 .filter(e -> e.getValue().apply(o._before, o._a, o._b, o._c).equals(o._after))
-                                .map(e -> e.getKey()).collect(Collectors.toList())))
+                                .map(Entry::getKey).collect(Collectors.toList())))
                 .collect(Collectors.toList());
 
         Pair<Integer, List<String>> collect = possibleOpcodes.stream().filter(f -> f.second().size() == 1).findFirst()

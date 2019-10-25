@@ -16,8 +16,8 @@ import se.anders_raberg.adventofcode2018.utilities.Pair;
 
 public class Day17 {
     private static final Logger LOGGER = Logger.getLogger(Day17.class.getName());
-    private final static Pattern PATTERN_Y_RANGE = Pattern.compile("x=(\\d+), y=(\\d+)\\.\\.(\\d+)");
-    private final static Pattern PATTERN_X_RANGE = Pattern.compile("y=(\\d+), x=(\\d+)\\.\\.(\\d+)");
+    private static final Pattern PATTERN_Y_RANGE = Pattern.compile("x=(\\d+), y=(\\d+)\\.\\.(\\d+)");
+    private static final Pattern PATTERN_X_RANGE = Pattern.compile("y=(\\d+), x=(\\d+)\\.\\.(\\d+)");
 
     private static class Coord {
         private final int _x;

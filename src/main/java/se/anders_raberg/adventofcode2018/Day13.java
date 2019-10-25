@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -142,7 +143,7 @@ public class Day13 {
                     .map(c -> new Pair<>(c._x, c._y))
                     .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream()
                     .filter(e -> e.getValue() > 1) //
-                    .map(e -> e.getKey()) //
+                    .map(Entry::getKey) //
                     .findFirst();
 
             if (possibleCrashLocation.isPresent()) {

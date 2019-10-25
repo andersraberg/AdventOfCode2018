@@ -26,7 +26,7 @@ public class Day8 {
 
         public Integer getMetadata() {
             return _metaData.stream().mapToInt(Integer::intValue).sum()
-                    + _children.stream().map(n -> n.getMetadata()).mapToInt(Integer::intValue).sum();
+                    + _children.stream().map(Node::getMetadata).mapToInt(Integer::intValue).sum();
         }
 
         public Integer getValue() {

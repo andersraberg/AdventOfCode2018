@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -78,7 +80,7 @@ public class Day7 {
             }
 
             time++;
-        } while (!dependencies.isEmpty() || Arrays.stream(workers).anyMatch(w -> w != null));
+        } while (!dependencies.isEmpty() || Arrays.stream(workers).anyMatch(Objects::nonNull));
 
         LOGGER.info("Part 1: " + result1);
         LOGGER.info("Part 2: " + result2 + " with time " + time);
@@ -88,13 +90,13 @@ public class Day7 {
         return dependencies.entrySet() //
                 .stream() //
                 .filter(e -> !e.getKey().equals(step)) //
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
     private static Map<String, Set<String>> removeStepFromDeps(String step, Map<String, Set<String>> dependencies) {
         return dependencies.entrySet() //
                 .stream() //
-                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue() //
+                .collect(Collectors.toMap(Entry::getKey, e -> e.getValue() //
                         .stream() //
                         .filter(v -> !v.equals(step)).collect(Collectors.toSet())));
     }
@@ -103,7 +105,7 @@ public class Day7 {
         return dependencies.entrySet() //
                 .stream() //
                 .filter(e -> e.getValue().isEmpty()) //
-                .map(e -> e.getKey()) //
+                .map(Entry::getKey) //
                 .sorted() //
                 .findFirst();
     }

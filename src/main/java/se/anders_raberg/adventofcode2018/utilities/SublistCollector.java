@@ -23,27 +23,17 @@ public class SublistCollector<T> implements Collector<T, List<List<T>>, List<Lis
 
     @Override
     public Supplier<List<List<T>>> supplier() {
-        return new Supplier<List<List<T>>>() {
-
-            @Override
-            public List<List<T>> get() {
-                return new ArrayList<>();
-            }
-        };
+        return ArrayList::new;
     }
 
     @Override
     public BiConsumer<List<List<T>>, T> accumulator() {
-        return new BiConsumer<List<List<T>>, T>() {
-
-            @Override
-            public void accept(List<List<T>> t, T u) {
-                synchronized (_tmpList) {
-                    _tmpList.add(u);
-                    if (_tmpList.size() == _size) {
-                        t.add(_tmpList);
-                        _tmpList = new ArrayList<>();
-                    }
+        return (t, u) -> {
+            synchronized (_tmpList) {
+                _tmpList.add(u);
+                if (_tmpList.size() == _size) {
+                    t.add(new ArrayList<>(_tmpList));
+                    _tmpList.clear();
                 }
             }
         };
@@ -51,31 +41,23 @@ public class SublistCollector<T> implements Collector<T, List<List<T>>, List<Lis
 
     @Override
     public BinaryOperator<List<List<T>>> combiner() {
-        return new BinaryOperator<List<List<T>>>() {
-
-            @Override
-            public List<List<T>> apply(List<List<T>> t, List<List<T>> u) {
-                List<List<T>> combined = new ArrayList<>();
-                combined.addAll(t);
-                combined.addAll(u);
-                return combined;
-            }
+        return (t, u) -> {
+            List<List<T>> combined = new ArrayList<>();
+            combined.addAll(t);
+            combined.addAll(u);
+            return combined;
         };
     }
 
     @Override
     public Function<List<List<T>>, List<List<T>>> finisher() {
-        return new Function<List<List<T>>, List<List<T>>>() {
-
-            @Override
-            public List<List<T>> apply(List<List<T>> t) {
-                synchronized (_tmpList) {
-                    if (!_tmpList.isEmpty() && _includeIncomplete) {
-                        t.add(_tmpList);
-                    }
+        return t -> {
+            synchronized (_tmpList) {
+                if (!_tmpList.isEmpty() && _includeIncomplete) {
+                    t.add(_tmpList);
                 }
-                return t;
             }
+            return t;
         };
     }
 

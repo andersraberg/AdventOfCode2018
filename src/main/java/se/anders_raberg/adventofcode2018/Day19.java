@@ -36,7 +36,7 @@ public class Day19 {
     }
 
     private static final Logger LOGGER = Logger.getLogger(Day19.class.getName());
-    private final static String PATTERN = "([a-z]+) (\\d+) (\\d+) (\\d+)";
+    private static final String PATTERN = "([a-z]+) (\\d+) (\\d+) (\\d+)";
 
     @FunctionalInterface
     private interface Opcode {

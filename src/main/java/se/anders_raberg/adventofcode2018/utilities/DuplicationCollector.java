@@ -19,51 +19,31 @@ public class DuplicationCollector<T> implements Collector<T, List<T>, List<T>> {
 
     @Override
     public Supplier<List<T>> supplier() {
-        return new Supplier<List<T>>() {
-
-            @Override
-            public List<T> get() {
-                return new ArrayList<>();
-            }
-        };
+        return ArrayList::new;
     }
 
     @Override
     public BiConsumer<List<T>, T> accumulator() {
-        return new BiConsumer<List<T>, T>() {
-
-            @Override
-            public void accept(List<T> t, T u) {
-                for (int i = 0; i < _factor; i++) {
-                    t.add(u);
-                }
+        return (t, u) -> {
+            for (int i = 0; i < _factor; i++) {
+                t.add(u);
             }
         };
     }
 
     @Override
     public BinaryOperator<List<T>> combiner() {
-        return new BinaryOperator<List<T>>() {
-
-            @Override
-            public List<T> apply(List<T> t, List<T> u) {
-                List<T> combined = new ArrayList<>();
-                combined.addAll(t);
-                combined.addAll(u);
-                return combined;
-            }
+        return (t, u) -> {
+            List<T> combined = new ArrayList<>();
+            combined.addAll(t);
+            combined.addAll(u);
+            return combined;
         };
     }
 
     @Override
     public Function<List<T>, List<T>> finisher() {
-        return new Function<List<T>, List<T>>() {
-
-            @Override
-            public List<T> apply(List<T> t) {
-                return t;
-            }
-        };
+        return t -> t;
     }
 
     @Override

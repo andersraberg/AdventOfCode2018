@@ -77,9 +77,9 @@ public class Day4 {
                 .sorted(Event::compareTo) //
                 .collect(Collectors.toList());
 
-        Map<Integer, Integer> _sleptMinutesPerGuard = new HashMap<>();
-        Map<Integer, Map<Integer, Integer>> _timesSleptPerMinPerGuard = new HashMap<>();
-        Map<Integer, Map<Integer, Integer>> _timesSleptPerGuardPerMin = new HashMap<>();
+        Map<Integer, Integer> sleptMinutesPerGuard = new HashMap<>();
+        Map<Integer, Map<Integer, Integer>> timesSleptPerMinPerGuard = new HashMap<>();
+        Map<Integer, Map<Integer, Integer>> timesSleptPerGuardPerMin = new HashMap<>();
 
         // This code assumes that the events for each guard will be in the order
         // BEGIN, SLEEP, WAKE, SLEEP, WAKE, ......
@@ -92,14 +92,14 @@ public class Day4 {
                 sleepTime = event._date;
             } else if (EventType.WAKES.equals(event._type)) {
                 Integer sleptMinutes = (int) Duration.between(sleepTime, event._date).toMinutes();
-                _sleptMinutesPerGuard.merge(currentGuard, sleptMinutes, Integer::sum);
+                sleptMinutesPerGuard.merge(currentGuard, sleptMinutes, Integer::sum);
 
-                Map<Integer, Integer> timesSleptPerMinForCurrentGuard = _timesSleptPerMinPerGuard
+                Map<Integer, Integer> timesSleptPerMinForCurrentGuard = timesSleptPerMinPerGuard
                         .computeIfAbsent(currentGuard, k -> new HashMap<>());
 
                 for (int i = sleepTime.getMinute(); i < event._date.getMinute(); i++) {
                     timesSleptPerMinForCurrentGuard.compute(i, (k, v) -> (v == null) ? 1 : v + 1);
-                    Map<Integer, Integer> timesSleptPerGuardForCurrentMin = _timesSleptPerGuardPerMin.computeIfAbsent(i,
+                    Map<Integer, Integer> timesSleptPerGuardForCurrentMin = timesSleptPerGuardPerMin.computeIfAbsent(i,
                             k -> new HashMap<>());
 
                     timesSleptPerGuardForCurrentMin.compute(currentGuard, (k, v) -> (v == null) ? 1 : v + 1);
@@ -108,11 +108,11 @@ public class Day4 {
         }
 
         // Find guard who slept most
-        Integer guard = _sleptMinutesPerGuard.entrySet().stream().sorted(Day4::reverseCompare).findFirst().get()
+        Integer guard = sleptMinutesPerGuard.entrySet().stream().sorted(Day4::reverseCompare).findFirst().get()
                 .getKey();
 
         // Find the minute he slept most often
-        Map<Integer, Integer> timesSleptPerMinForThisGuard = _timesSleptPerMinPerGuard.get(guard);
+        Map<Integer, Integer> timesSleptPerMinForThisGuard = timesSleptPerMinPerGuard.get(guard);
         Integer minute = timesSleptPerMinForThisGuard.entrySet().stream().sorted(Day4::reverseCompare).findFirst().get()
                 .getKey();
 
@@ -120,7 +120,7 @@ public class Day4 {
         LOGGER.info("Part 1: " + guard * minute);
 
         outerloop: for (int i = 59; i > 0; i--) {
-            for (Entry<Integer, Map<Integer, Integer>> minuteEntry : _timesSleptPerGuardPerMin.entrySet()) {
+            for (Entry<Integer, Map<Integer, Integer>> minuteEntry : timesSleptPerGuardPerMin.entrySet()) {
                 for (Entry<Integer, Integer> guardEntry : minuteEntry.getValue().entrySet()) {
                     if (guardEntry.getValue() == i) {
 
@@ -135,7 +135,7 @@ public class Day4 {
     }
 
     private static int reverseCompare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
-        return (int) (o2.getValue() - o1.getValue());
+        return (o2.getValue() - o1.getValue());
     }
 
 }

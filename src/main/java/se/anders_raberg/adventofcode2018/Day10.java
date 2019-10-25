@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Day10 {
-    private static final Logger LOGGER = Logger.getLogger(Day9.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Day10.class.getName());
 
     private static class Point {
-        private final static Pattern PATTERN = Pattern.compile("position=<(.*),(.*)> velocity=<(.*),(.*)>");
+        private static final Pattern PATTERN = Pattern.compile("position=<(.*),(.*)> velocity=<(.*),(.*)>");
         private final long _x;
         private final long _y;
         private final long _dx;

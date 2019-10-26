@@ -7,7 +7,9 @@ node {
     
     stage('Sonar') {
         dir('AdventOfCode2018') {
-            sh './gradlew sonarqube -Dsonar.projectKey=AdventofCode2018 -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=cc9b6db0911b59b51fc766af0372efff5e1a7bec'
+	    withSonarQubeEnv() { // Will pick the global server connection you have configured
+                sh './gradlew sonarqube -Dsonar.projectKey=AdventofCode2018'
+            }
         }
     }
 

@@ -51,7 +51,7 @@ public class Day18 {
         String[][] copy = new String[AREA_SIZE][AREA_SIZE];
         for (int y = 0; y < AREA_SIZE; y++) {
             for (int x = 0; x < AREA_SIZE; x++) {
-                copy[y][x] = new String(orig[y][x]);
+                copy[y][x] = orig[y][x];
             }
         }
         return copy;

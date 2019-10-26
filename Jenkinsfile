@@ -1,12 +1,4 @@
 node {
-    stage('Clone/Pull') {
-        if (fileExists('AdventOfCode2018')) {
-            sh 'git -C AdventOfCode2018 pull --rebase --log'
-        } else {
-            sh 'git clone https://github.com/andersraberg/AdventOfCode2018.git'
-        }
-    }
-
     stage('Build') {
         dir('AdventOfCode2018') {
             sh './gradlew build'

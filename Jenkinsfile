@@ -6,6 +6,9 @@ node {
     
     stage('Code coverage') {
         sh './gradlew jacocoTestReport'
+        jacoco( 
+            execPattern: 'build/jacoco/*.exec',
+        )
     }
  
     stage('Sonar') {

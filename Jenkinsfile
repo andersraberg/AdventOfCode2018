@@ -4,6 +4,10 @@ node {
         sh './gradlew clean build'
     }
     
+    stage('Code coverage') {
+        sh './gradlew jacocoTestReport'
+    }
+ 
     stage('Sonar') {
         withSonarQubeEnv() {
             sh './gradlew sonarqube -Dsonar.projectKey=AdventofCode2018'

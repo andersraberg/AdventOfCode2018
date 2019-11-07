@@ -26,7 +26,7 @@ node {
                      reportDir: 'build/reports/profile/',
                      reportFiles: 'index.html',
                      reportName: 'Gradle profile',
-                     reportTitles: ''])    }
+                     reportTitles: ''])
 
     }
 

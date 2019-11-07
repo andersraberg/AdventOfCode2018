@@ -1,7 +1,7 @@
 node {
     git 'https://github.com/andersraberg/AdventOfCode2018.git'
     stage('Build') {
-        sh './gradlew clean build -Pversion=$BUILD_NUMBER'
+        sh './gradlew clean build -Pversion=$BUILD_NUMBER --scan'
     }
     
     stage('Code coverage') {

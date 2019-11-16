@@ -61,7 +61,14 @@ artifactory {
     }
 }
 
+jacoco {
+    applyTo run
+}
 
+task applicationCodeCoverageReport(type:JacocoReport) {
+    executionData run
+    sourceSets sourceSets.main
+}
 
 dependencies {
     testCompile 'junit:junit:4.12'

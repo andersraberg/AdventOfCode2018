@@ -71,7 +71,7 @@ task applicationCodeCoverageReport(type:JacocoReport) {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 mainClassName = 'se.anders_raberg.adventofcode2018.DaysMain'
